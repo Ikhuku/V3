@@ -1,14 +1,15 @@
 import React from 'react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, StarRating } from "@/components/ui/card";
+import BestSellTag from './BestSellTag';
+import PreOrdertag from './PreOrdertag';
 
 
 const ProductCard = () => {
   return (
     <Card className="w-auto">
-        <CardContent>
-            <div className='bg-[#E6F1FC] text-sm p-1 font-semibold w-[50%] mb-2 rounded-[5px] flex items-center justify-center text-[#021236]'>
-            <p>Best seller</p>
-        </div>
+        <CardContent className={`flex gap-20`}>
+            <BestSellTag />
+            <PreOrdertag  />
         </CardContent>
         <CardContent className='mb-4'>
             <img
