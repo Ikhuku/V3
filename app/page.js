@@ -1,3 +1,4 @@
+import ProductCard from "@/components/layout/ProductCard";
 import Image from "next/image";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
           height={38}
           priority
         />
+        <ProductCard />
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
