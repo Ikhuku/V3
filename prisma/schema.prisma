@@ -28,10 +28,11 @@ model User {
   type      UserType @default(Email)
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
+  Seller    Seller[]
 }
 
 model Seller {
-  id               String @id @default(uuid())
+  id               String   @id @default(uuid())
   businessName     String
   businessRegno    String
   businessLocation String
@@ -43,8 +44,83 @@ model Seller {
   customerComplain String
   refundPolicy     String
   warranties       String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id             String    @id @default(uuid())
+  title          String
+  slug           String    @unique
+  description    String
+  media          Media[]
+  price          Float
+  discountPrice  Float?
+  inStock        Boolean   @default(true)
+  brand          String?
+  categoryId     String
+  category       Category  @relation(fields: [categoryId], references: [id])
+  variants       Variant[]
+  specifications Json?
+  ingredients    Json?
+  directions     String?
+  warranty       String?
+  warnings       String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  reviews        Review[]
+}
+
+model Variant {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  color     String?
+  size      String?
+  sku       String?
+  stock     Int     @default(0)
+}
+
+model Media {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  type      String // "image" or "video"
+  url       String
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  slug     String    @unique
+  products Product[]
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  userId    String
+  rating    Int // 1 to 5
+  title     String
+  content   String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId String?
-  user User @relation(fields: [userId], references: [id])
+}
+
+model Wishlist {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  variantId String?
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
 }

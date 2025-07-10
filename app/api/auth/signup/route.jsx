@@ -20,7 +20,6 @@ export async function POST(req) {
 
     const cookie = cookies()
 
-
     const token = jwt.sign({ userId: user.id,email: user.email }, SECRET_KEY, {
       expiresIn: '7d'
     })
